@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Clock, CheckCircle, XCircle, Truck, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../service/axiosConfig';
+import ApiService from '../../service/api';
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -18,10 +18,10 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get('/orders');
+      const response = await ApiService.getOrders();
       
-      // API trả về data.data (paginated)
-      const ordersData = response.data.data.data || [];
+      // API trả về { message, data: [...] }
+      const ordersData = response.data || [];
       setOrders(ordersData);
     } catch (error) {
       console.error('Lỗi lấy danh sách đơn hàng:', error);
@@ -39,15 +39,14 @@ const OrdersPage = () => {
 
     try {
       setCancellingOrder(orderId);
-      const response = await axiosInstance.post(`/orders/${orderId}/cancel`);
+      const response = await ApiService.cancelOrder(orderId);
       
-      if (response.data.message) {
-        alert(response.data.message);
+      if (response.message) {
+        alert(response.message);
         fetchOrders(); // Reload danh sách
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.message || 'Không thể hủy đơn hàng';
-      alert(errorMsg);
+      alert(error || 'Không thể hủy đơn hàng');
     } finally {
       setCancellingOrder(null);
     }
