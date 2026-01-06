@@ -26,7 +26,7 @@ const ProductFormModal = ({ product, onClose, onSuccess }) => {
   
   const isEditMode = !!product;
 
-  // Mock data - Bạn cần fetch từ API thực tế
+  
   const [brands, setBrands] = useState([
     { brand_id: 1, brand_name: 'Nike' },
     { brand_id: 2, brand_name: 'Adidas' },

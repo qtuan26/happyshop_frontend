@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Search, Edit, Trash2, Eye, Power, Package, Star, TrendingUp, Filter } from 'lucide-react';
 import AdminApiService from '../../service/admin-api';
-import ProductFormModal from './ProductFormModal.JSX';
+import ProductFormModal from './ProductFormModal.jsx';
 import ProductDetailModal from './ProductDetailModal';
 
 const AdminProducts = () => {
