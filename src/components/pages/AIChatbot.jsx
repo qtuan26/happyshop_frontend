@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Loader, Bot, User, ArrowLeft } from 'lucide-react';
+import ApiService from '../../service/api';
 
 const AIChatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -53,10 +54,7 @@ const AIChatbot = () => {
 
     try {
       console.log('Sending message to AI:', messageToSend);
-      // Giả lập API call - thay bằng: const response = await ApiService.chatWithAI(messageToSend);
-      const response = await new Promise(resolve => 
-        setTimeout(() => resolve({ reply: `Đây là phản hồi mẫu cho: "${messageToSend}"` }), 1500)
-      );
+      const response = await ApiService.chatWithAI(messageToSend);
       console.log('AI Response:', response);
       
       // API trả về { reply: "..." }
@@ -79,7 +77,7 @@ const AIChatbot = () => {
       let errorText = 'Xin lỗi, tôi đang gặp sự cố kỹ thuật. Vui lòng thử lại sau.';
       
       if (error.message.includes('đăng nhập')) {
-        errorText = error.message;
+        errorText = error.message; // Hiển thị message yêu cầu đăng nhập
       } else if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
         errorText = '⚠️ Lỗi kết nối đến server AI. Backend cần cấu hình CORS.';
       } else if (error.message.includes('401')) {
