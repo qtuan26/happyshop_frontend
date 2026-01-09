@@ -12,7 +12,7 @@ const Introduction = lazy(() => import("../components/pages/Introduction.jsx"));
 const Account = lazy(() => import("../components/pages/Account.jsx"));
 const Order = lazy(() => import("../components/pages/Order.jsx"));
 const MoMoPayment = lazy(() => import("../components/pages/MoMOoPayment.jsx"));
-const AIChatbot = lazy(() => import("../components/pages/AIChatBot.jsx"));
+const AIChatbot = lazy(() => import("../components/pages/AIChatbot.jsx"));
 
 // Admin Components
 const AdminLayout = lazy(() => import("../components/admin/AdminLayout.jsx"));
