@@ -18,10 +18,10 @@ export default class ApiService {
 
   static async register(registerDetails) {
     try {
-      const response = await axios.post('/register', registerDetails);
-      return response.message;
+      const response = await axiosInstance.post('/register', registerDetails);
+      return response.data.message;
     } catch (error) {
-      throw error.response?.message || 'Đăng ký thất bại';
+      throw error.response?.data?.message || 'Đăng ký thất bại';
     }
   }
 
