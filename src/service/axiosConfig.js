@@ -2,12 +2,14 @@
 import axios from 'axios';
 import { message } from 'antd';
 
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
 });
+
 
 // ===== Request interceptor =====
 axiosInstance.interceptors.request.use(
@@ -34,7 +36,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
 
-    if (status === 401 || status === 403) {
+    if (status === 401) {
       sessionStorage.clear();
       message.error("Vui lòng đăng nhập để tiếp tục");
       window.location.href = "/login";

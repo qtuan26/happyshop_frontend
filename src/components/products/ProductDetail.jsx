@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import message from 'antd/lib/message';
 import QuickBuyModal from '../pages/QuickBuyModal';
 import ApiService from '../../service/api';
+import RecommendedProducts from './RecommendedProducts';
 
 const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState('');
@@ -17,6 +18,7 @@ const ProductDetail = () => {
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
+  const isLoggedIn = !!sessionStorage.getItem('token');
 
 
   useEffect(() => {
@@ -565,44 +567,9 @@ const ProductDetail = () => {
           )}
         </div>
 
-        {/* Related Products */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Sản phẩm liên quan</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {relatedProducts.map((item) => (
-              <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer">
-                <div className="relative">
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    className="w-full h-56 object-cover"
-                  />
-                  <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-                    -{Math.round((1 - item.price / item.originalPrice) * 100)}%
-                  </span>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
-                    {item.name}
-                  </h3>
-                  <div className="flex items-center mb-2">
-                    <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                    <span className="text-sm text-gray-600 ml-1">{item.rating}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-red-500 font-bold text-lg">{item.price.toLocaleString('vi-VN')}₫</p>
-                      <p className="text-gray-400 text-xs line-through">{item.originalPrice.toLocaleString('vi-VN')}₫</p>
-                    </div>
-                    <button className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700">
-                      <ShoppingCart size={16} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        
+        {/* Sản phẩm gợi ý */}
+      {isLoggedIn && <RecommendedProducts />}
       </div>
       <QuickBuyModal
         isOpen={showQuickBuyModal}

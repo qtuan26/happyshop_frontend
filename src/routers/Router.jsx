@@ -12,6 +12,7 @@ const Introduction = lazy(() => import("../components/pages/Introduction.jsx"));
 const Account = lazy(() => import("../components/pages/Account.jsx"));
 const Order = lazy(() => import("../components/pages/Order.jsx"));
 const MoMoPayment = lazy(() => import("../components/pages/MoMOoPayment.jsx"));
+const AIChatbot = lazy(() => import("../components/pages/AIChatBot.jsx"));
 
 // Admin Components
 const AdminLayout = lazy(() => import("../components/admin/AdminLayout.jsx"));
@@ -32,6 +33,7 @@ const routers = [
   { path: "account", component: Account },
   { path: "orders", component: Order },
   { path: "momo-payment", component: MoMoPayment },
+  { path: "chatbot", component: AIChatbot },
   
   
   // Admin routes - Protected

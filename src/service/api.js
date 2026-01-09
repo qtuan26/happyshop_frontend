@@ -16,12 +16,23 @@ export default class ApiService {
     }
   }
 
+  // Gửi OTP
+  static async sendOtp(data) {
+    try {
+      const response = await axiosInstance.post('/auth/send-otp', data);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Không thể gửi OTP' };
+    }
+  }
+
+  // Đăng ký với OTP
   static async register(registerDetails) {
     try {
-      const response = await axios.post('/register', registerDetails);
-      return response.message;
+      const response = await axiosInstance.post('/register', registerDetails);
+      return response.data;
     } catch (error) {
-      throw error.response?.message || 'Đăng ký thất bại';
+      throw error.response?.data || { message: 'Đăng ký thất bại' };
     }
   }
 
@@ -362,6 +373,68 @@ export default class ApiService {
       return response.data;
     } catch (error) {
       throw error.response?.data?.message || 'Không thể gửi tin nhắn';
+    }
+  }
+
+  //recommend products
+  static async getRecommendedProducts() {
+    const response = await axiosInstance.get('/products/recommended');
+    return response.data;
+  }
+
+  // ===== AI CHATBOT =====
+  static async chatWithAI(message) {
+    try {
+      console.log('API Call - chatWithAI:', { message });
+      
+      // Lấy user từ sessionStorage (format: {id, email, role, ...})
+      const userStr = sessionStorage.getItem('user');
+      let userId = null;
+      
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          userId = user.id; // Lấy id từ object user
+          console.log('User ID found:', userId);
+        } catch (e) {
+          console.warn('Cannot parse user data:', e);
+        }
+      }
+      
+      if (!userId) {
+        throw new Error('Vui lòng đăng nhập để sử dụng AI Chat');
+      }
+      
+      // GIẢI PHÁP TẠM THỜI: Dùng CORS proxy
+      const apiUrl = 'https://ai-recomment-chatbot-php.onrender.com/api/chat';
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: String(userId),
+          message: message
+        })
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API Error Response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('AI Response:', data);
+      
+      return data;
+    } catch (error) {
+      console.error('API Error:', {
+        message: error.message,
+        error: error
+      });
+      throw error;
     }
   }
 

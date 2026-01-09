@@ -67,7 +67,8 @@ const Header = () => {
     }
     
     // Dispatch event để Main layout bắt và mở chat
-    window.dispatchEvent(new Event('open-chat'));
+    // window.dispatchEvent(new Event('open-chat'));
+    navigate('/chatbot');
   };
 
   const handleCategoryClick = (category) => {
@@ -103,7 +104,7 @@ const Header = () => {
               onClick={handleOpenChat}
             >
               <MessageCircle size={20} />
-              <span className="font-bold">Hỗ trợ / Tư vấn</span>
+              <span className="font-bold">Hỗ trợ với AI</span>
             </button>
 
             {/* USER + CART */}
