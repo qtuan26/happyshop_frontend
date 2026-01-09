@@ -16,23 +16,12 @@ export default class ApiService {
     }
   }
 
-  // Gửi OTP
-  static async sendOtp(data) {
-    try {
-      const response = await axiosInstance.post('/auth/send-otp', data);
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || { message: 'Không thể gửi OTP' };
-    }
-  }
-
-  // Đăng ký với OTP
   static async register(registerDetails) {
     try {
-      const response = await axiosInstance.post('/register', registerDetails);
-      return response.data;
+      const response = await axios.post('/register', registerDetails);
+      return response.message;
     } catch (error) {
-      throw error.response?.data || { message: 'Đăng ký thất bại' };
+      throw error.response?.message || 'Đăng ký thất bại';
     }
   }
 
